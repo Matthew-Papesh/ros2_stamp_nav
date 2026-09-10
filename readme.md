@@ -1,4 +1,4 @@
-# Adaptive Spline Trajectory Planning with Simulated Annealing 
+# Stochastic Topological Adaptive Motion Planning (STAMP) for Intelligent Mobile Robot Navigation
 ## 1.0 Introduction
 The goal of this project was to develop a custom motion planner to drive along **spline paths that adapt to avoid obstacles and conform to the environment**. Spline paths interpolate a small subset of an initial A* search. **Splines explore neighboring homotopy** for adaptive planning. To maximize optimality and safety, this allows a spline path to topologically deviate from an initial A* path.   
 

@@ -1,7 +1,0 @@
-{
-  "package_name": "navigation_interfaces",
-  "non_idl_tuples": [
-    "/home/matthew-papesh/dev_ws/src/navigation_interfaces:msg/Spline.msg",
-    "/home/matthew-papesh/dev_ws/src/navigation_interfaces:srv/Spline.srv"
-  ]
-}

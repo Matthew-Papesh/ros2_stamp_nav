@@ -1,4 +1,0 @@
-[console_scripts]
-nav_node = navigation.navigator:main
-quintic_test_node = navigation.quintic_test:main
-spline_node = navigation.spline:main

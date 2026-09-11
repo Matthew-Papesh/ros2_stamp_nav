@@ -776,35 +776,14 @@ class Navigator(Node):
             clegg_integration=True
         )
 
-        # max time to travel between waypoints  
-        frontier_timeout = 10
-        # time stamp of when last waypoint was reached 
-        prev_frontier_update_time = -1.0
-        min_position_error, frontier_index = None, -1
-
+        frontier_index = 0
         # drive robot with speed data and feedback control
         while index < len(spline_path.poses) - 1:
             # approximate current position (current position; not recorded approximates to waypoints)
             index = self.get_pose_index(spline_path, self.curr_position, index, padding) 
-            # current position error as a vector magnitude at any time
-            raw_x_error = (self.curr_position.pose.position.x - spline_path.poses[index].pose.position.x)
-            raw_y_error = (self.curr_position.pose.position.y - spline_path.poses[index].pose.position.y)
-            
-            position_x_pct_error = raw_x_error / (2.0 * self.TURTLEBOT3_RADIUS)
-            position_y_pct_error = raw_y_error / (2.0 * self.TURTLEBOT3_RADIUS)
-            position_error = handler.euclid_distance((0,0), (position_x_pct_error, position_y_pct_error))
-            
-            # check if the robot is taking too long to progress along the path; 
-            if index > padding and prev_frontier_update_time > 0 and self.get_clock().now().nanoseconds/1e9 - prev_frontier_update_time > frontier_timeout:
-                self.set_speed(0, 0) # stop driving, end early, and return pct performance errors of 100% to indicate faulty path driving
             # record the closest point the robot drove to 
             if index > frontier_index:
-                prev_frontier_update_time = self.get_clock().now().nanoseconds / 1e9 
                 frontier_index = index
-            # evaluate the closest the robot drove by min error for current point
-            elif min_position_error is None or position_error < min_position_error:
-                min_position_error = position_error
-                recorded_pose = self.curr_position
 
             # look up memoized speed calculations given position index and system feedback control
             ang_speed = angular_speeds[index] + angular_speed_feedback.output() 
